@@ -31,6 +31,7 @@ class Patient
     private ?string $prenom = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Le numéro de téléphone est nécessaire pour le suivi des rendez-vous")]
     private ?int $telephone = null;
 
     #[ORM\Column(length: 255)]
