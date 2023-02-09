@@ -42,7 +42,7 @@ class Patient
     private ?\DateTimeInterface $date_naissance = null;
 
     #[ORM\ManyToOne(inversedBy: 'patients')]
-    #[Groups(["getPatients"])]
+   // #[Groups(["getPatients"])]
     private ?Praticien $praticien = null;
 
 

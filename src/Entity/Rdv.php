@@ -27,7 +27,7 @@ class Rdv
     private ?int $montant = null;
 
     #[ORM\ManyToOne(inversedBy: 'rdvsPatient')]
-    #[Groups(["getPatients"])]
+   // #[Groups(["getPatients"])]
     private ?Patient $rdvPatient = null;
 
     #[ORM\ManyToOne(inversedBy: 'rdvsPraticien')]
