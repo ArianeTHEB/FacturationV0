@@ -6,6 +6,7 @@ use App\Entity\Patient;
 use App\Repository\PatientRepository;
 use App\Repository\PraticienRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,9 @@ class PatientController extends AbstractController
 {
     //Route pour obtenir liste de TOUS les patients
     #[Route('/api/patients', name: 'patient', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN', message : 'Vous n avez pas acces a ces informations')]
     public function getPatientList(PatientRepository $patientRepository, SerializerInterface $serializer):JsonResponse
+
     {
         $patientList = $patientRepository->findAll();
         $jsonPatientList = $serializer->serialize($patientList, 'json', ['groups'=>'getPatients']);
@@ -32,6 +35,7 @@ class PatientController extends AbstractController
 
     //Route pour obtenir patient par ID
     #[Route('/api/patients/{id}', name: 'detailPatient', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN', message : 'Vous n avez pas acces a ces informations')]
     public function getDetailPatient(Patient $patient, int $id,SerializerInterface $serializer, PatientRepository $patientRepository): JsonResponse
     {
         // méthode avec ParamConverter il faut ajouter Patient $patient dans les paramètres de la méthode
@@ -43,6 +47,7 @@ class PatientController extends AbstractController
 
     // méthode pour supprimer un patient
     #[Route('api/patients/{id}', name: 'deletePatient', methods: ['DELETE'])]
+    #[IsGranted('ROLE_ADMIN', message : 'Vous n avez pas acces a ces informations')]
     public function deletePatient(Patient $patient, EntityManagerInterface $em): JsonResponse
     {
         $em->remove($patient);
